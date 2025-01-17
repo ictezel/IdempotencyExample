@@ -4,7 +4,10 @@ public interface IProductRepository
 {
     Product AddToList(ProductModel model);
     Product AddToDictionary(ProductModel model);
-    Product GetProduct(string name);
+    Product Get(string name);
+    Product Get(int id);
+    void Update(Product product);
+    void Delete(int id);
 }
 
 public class ProductRepository : IProductRepository
@@ -28,9 +31,25 @@ public class ProductRepository : IProductRepository
         return newProduct;
     }
 
-    public Product GetProduct(string name)
+    public Product Get(string name)
     {
         return productDictionay[name];
+    }
+
+    public Product Get(int id)
+    {
+        return productDictionay.ElementAt(id - 1).Value;
+    }
+
+    public void Update(Product product)
+    {
+        productDictionay[product.Name] = product;
+    }
+
+    public void Delete(int id)
+    {
+        var entry = productDictionay.ElementAt(id - 1);
+        productDictionay.Remove(entry.Key);
     }
 }
 
